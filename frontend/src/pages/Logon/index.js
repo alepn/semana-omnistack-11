@@ -22,11 +22,11 @@ export default function Logon() {
     };
 
     try{
-    const response = await api.post('sessions', data);
-    localStorage.setItem('ongId', id);
-    localStorage.setItem('ongName', response.data.name);
-    alert(`Logon realizado com sucesso!`);
-    history.push('/profile');
+      const response = await api.post('sessions', data);
+      localStorage.setItem('ongId', id);
+      localStorage.setItem('ongName', response.data.name);
+      alert(`Logon realizado com sucesso!`);
+      history.push('/profile');
     } catch (err){
       alert('Falha no logon!');
     }
