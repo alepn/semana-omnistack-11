@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { Text, Image, View, TouchableOpacity, FlatList } from 'react-native';
+import { Text, Image, View, TouchableOpacity, FlatList, AsyncStorage } from 'react-native';
 
 import api from '../../services/api';
 
@@ -14,7 +14,10 @@ export default function Incidents(){
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    
+
+    const userId = AsyncStorage.getItem('userId');
+    const userName = AsyncStorage.getItem('userName');    
+
     const navigation = useNavigation();
 
     function navigateToDetail(incident){
@@ -36,6 +39,11 @@ export default function Incidents(){
         setLoading(false);
     }
 
+    function handleLogout(){
+        AsyncStorage.clear();
+        navigation.navigate('Logon');
+    }
+
     useEffect(() => {
         loadIncidents();
     }, []);
@@ -47,6 +55,12 @@ export default function Incidents(){
                 <Text style={styles.headerText}>
                     Total de <Text style={styles.headerTextBold}>{total} casos</Text>.
                 </Text>
+                <TouchableOpacity 
+                    style={styles.logoutButton} 
+                    onPress={handleLogout}
+                >
+                    <Feather name="power" size={16} color="#E02041" />
+                </TouchableOpacity>
             </View>
 
                 <Text style={styles.title}>Bem-vindo!</Text>
